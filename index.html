@@ -3,83 +3,695 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coding Class Signup</title>
-    <link rel="stylesheet" href="style.css">
+    <title>CodeMaster Academy | Sign Up</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .code-font {
+            font-family: 'Fira Code', monospace;
+        }
+        .password-strength {
+            height: 4px;
+            transition: all 0.3s ease;
+        }
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .course-card {
+            transition: all 0.3s ease;
+        }
+        .input-error {
+            border-color: #ef4444;
+        }
+        .error-message {
+            opacity: 0;
+            max-height: 0;
+            transition: all 0.3s ease;
+        }
+        .error-message.show {
+            opacity: 1;
+            max-height: 20px;
+        }
+        .password-toggle {
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+    </style>
 </head>
-<body>
-    <div class="container">
-        <header class="hero">
-            <h1>Join Our Next Coding Cohort</h1>
-            <p>Unlock your potential. Start your journey in tech today.</p>
-        </header>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-indigo-700 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-code text-2xl"></i>
+                <span class="code-font text-xl font-bold">CodeMaster</span>
+            </div>
+            <div class="hidden md:flex space-x-6">
+                <a href="#" class="hover:text-indigo-200 transition">Courses</a>
+                <a href="#" class="hover:text-indigo-200 transition">About</a>
+                <a href="#" class="hover:text-indigo-200 transition">Contact</a>
+            </div>
+            <button class="md:hidden">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+    </nav>
 
-        <main>
-            <section id="courses" class="courses-section">
-                <h2>Select Your Course</h2>
-                <div class="course-cards">
-                    <div class="course-card" data-course-id="1" data-course-name="Introduction to Python" data-price="50000">
-                        <h3>Introduction to Python</h3>
-                        <p class="course-description">Master the fundamentals of Python programming, from basic syntax to object-oriented programming.</p>
-                        <p class="course-price">NGN 50,000</p>
-                        <button class="select-course-btn">Select Course</button>
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-16">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Start Your Coding Journey Today</h1>
+                <p class="text-xl mb-8">Join our expert-led courses and transform your career in tech. Learn in-demand skills with hands-on projects and real-world applications.</p>
+                <a href="#courses" class="bg-white text-indigo-700 font-bold py-3 px-8 rounded-full hover:bg-indigo-100 transition duration-300 inline-block">Explore Courses</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Courses Section -->
+            <section id="courses" class="lg:w-1/2">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">Our Featured Courses</h2>
+                <p class="text-gray-600 mb-8">Select a course to begin your enrollment process. All courses include lifetime access to materials and a certificate upon completion.</p>
+                
+                <div class="space-y-6">
+                    <!-- Course 1 -->
+                    <div class="course-card bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-800 mb-2">Introduction to Python</h3>
+                                    <p class="text-gray-600 mb-4">Learn Python fundamentals, data structures, and build your first applications.</p>
+                                </div>
+                                <span class="bg-indigo-100 text-indigo-800 text-sm font-semibold px-3 py-1 rounded-full">Beginner</span>
+                            </div>
+                            <div class="flex items-center justify-between mt-4">
+                                <span class="text-2xl font-bold text-gray-800">₦25,000</span>
+                                <button class="select-course-btn bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-6 rounded-lg transition" 
+                                        data-course="python" 
+                                        data-price="25000">
+                                    Select Course
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="course-card" data-course-id="2" data-course-name="Full-Stack Web Development" data-price="75000">
-                        <h3>Full-Stack Web Development</h3>
-                        <p class="course-description">Learn to build dynamic web applications from front to back with HTML, CSS, JavaScript, and Node.js.</p>
-                        <p class="course-price">NGN 75,000</p>
-                        <button class="select-course-btn">Select Course</button>
+
+                    <!-- Course 2 -->
+                    <div class="course-card bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-800 mb-2">Full-Stack Web Development</h3>
+                                    <p class="text-gray-600 mb-4">Master HTML, CSS, JavaScript, Node.js and build complete web applications.</p>
+                                </div>
+                                <span class="bg-purple-100 text-purple-800 text-sm font-semibold px-3 py-1 rounded-full">Intermediate</span>
+                            </div>
+                            <div class="flex items-center justify-between mt-4">
+                                <span class="text-2xl font-bold text-gray-800">₦75,000</span>
+                                <button class="select-course-btn bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-6 rounded-lg transition" 
+                                        data-course="webdev" 
+                                        data-price="75000">
+                                    Select Course
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="course-card" data-course-id="3" data-course-name="Data Science with R" data-price="65000">
-                        <h3>Data Science with R</h3>
-                        <p class="course-description">Dive into data analysis, visualization, and machine learning using the R programming language.</p>
-                        <p class="course-price">NGN 65,000</p>
-                        <button class="select-course-btn">Select Course</button>
+
+                    <!-- Course 3 -->
+                    <div class="course-card bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-800 mb-2">Data Science with R</h3>
+                                    <p class="text-gray-600 mb-4">Learn data analysis, visualization, and machine learning with R programming.</p>
+                                </div>
+                                <span class="bg-green-100 text-green-800 text-sm font-semibold px-3 py-1 rounded-full">Advanced</span>
+                            </div>
+                            <div class="flex items-center justify-between mt-4">
+                                <span class="text-2xl font-bold text-gray-800">₦60,000</span>
+                                <button class="select-course-btn bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-6 rounded-lg transition" 
+                                        data-course="datascience" 
+                                        data-price="60000">
+                                    Select Course
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <section id="signup-form-section" class="signup-form-section">
-                <h2>Create Your Account</h2>
-                <form id="signup-form">
-                    <div class="form-group">
-                        <label for="fullName">Full Name</label>
-                        <input type="text" id="fullName" name="fullName" required>
-                        <div class="error-message"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" id="email" name="email" required>
-                        <div class="error-message"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Phone Number</label>
-                        <input type="tel" id="phone" name="phone" required>
-                        <div class="error-message"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <div class="password-wrapper">
-                            <input type="password" id="password" name="password" required>
-                            <span class="toggle-password">Show</span>
+            <!-- Signup Form Section -->
+            <section class="lg:w-1/2">
+                <div class="bg-white rounded-xl shadow-md p-6 sticky top-6">
+                    <h2 class="text-3xl font-bold mb-6 text-gray-800">Enrollment Form</h2>
+                    
+                    <div id="selected-course-display" class="bg-indigo-50 border-l-4 border-indigo-500 p-4 mb-6 rounded hidden">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h3 class="font-bold text-indigo-800" id="selected-course-name">Course Name</h3>
+                                <p class="text-indigo-600">Price: <span id="selected-course-price" class="font-bold">₦0</span></p>
+                            </div>
+                            <button id="change-course-btn" class="text-indigo-600 hover:text-indigo-800 font-medium">Change</button>
                         </div>
-                        <div id="password-strength" class="password-strength"></div>
-                        <div class="error-message"></div>
                     </div>
-                    <div class="form-group">
-                        <label for="confirmPassword">Confirm Password</label>
-                        <input type="password" id="confirmPassword" name="confirmPassword" required>
-                        <div class="error-message"></div>
-                    </div>
-                    <button type="submit" id="submit-btn" class="submit-btn" disabled>Sign Up & Pay</button>
-                </form>
-            </section>
-        </main>
 
-        <footer>
-            <p>© 2025 Coding Academy. All rights reserved.</p>
-        </footer>
+                    <form id="signup-form" class="space-y-4">
+                        <!-- Full Name -->
+                        <div>
+                            <label for="fullname" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                            <input type="text" id="fullname" name="fullname" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition" placeholder="John Doe">
+                            <div class="error-message text-sm text-red-600 mt-1" id="fullname-error">Please enter your full name</div>
+                        </div>
+
+                        <!-- Email -->
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                            <input type="email" id="email" name="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition" placeholder="john@example.com">
+                            <div class="error-message text-sm text-red-600 mt-1" id="email-error">Please enter a valid email address</div>
+                        </div>
+
+                        <!-- Phone -->
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition" placeholder="08012345678">
+                            <div class="error-message text-sm text-red-600 mt-1" id="phone-error">Please enter a valid Nigerian phone number</div>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="relative">
+                            <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                            <input type="password" id="password" name="password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition" placeholder="At least 8 characters">
+                            <div class="password-toggle absolute right-0" id="toggle-password">
+                                <i class="far fa-eye text-gray-400"></i>
+                            </div>
+                            <div class="error-message text-sm text-red-600 mt-1" id="password-error">Password must be at least 8 characters</div>
+                            <div class="mt-2">
+                                <div class="flex space-x-1">
+                                    <div class="password-strength w-1/4 bg-gray-200 rounded" id="strength-1"></div>
+                                    <div class="password-strength w-1/4 bg-gray-200 rounded" id="strength-2"></div>
+                                    <div class="password-strength w-1/4 bg-gray-200 rounded" id="strength-3"></div>
+                                    <div class="password-strength w-1/4 bg-gray-200 rounded" id="strength-4"></div>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1" id="password-strength-text">Password strength</p>
+                            </div>
+                        </div>
+
+                        <!-- Confirm Password -->
+                        <div class="relative">
+                            <label for="confirm-password" class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+                            <input type="password" id="confirm-password" name="confirm-password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition" placeholder="Confirm your password">
+                            <div class="password-toggle absolute right-0" id="toggle-confirm-password">
+                                <i class="far fa-eye text-gray-400"></i>
+                            </div>
+                            <div class="error-message text-sm text-red-600 mt-1" id="confirm-password-error">Passwords do not match</div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="pt-4">
+                            <button type="submit" id="submit-btn" class="w-full bg-gray-300 text-gray-500 font-bold py-3 px-4 rounded-lg cursor-not-allowed" disabled>
+                                Select a course to continue
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="mt-6 text-center text-sm text-gray-500">
+                        <p>Already have an account? <a href="#" class="text-indigo-600 hover:text-indigo-800 font-medium">Log in</a></p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Payment Modal -->
+    <div id="payment-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl p-6 max-w-md w-full mx-4">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-gray-800">Confirm Payment</h3>
+                <button id="close-modal" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="mb-6">
+                <p class="text-gray-600 mb-2">You're about to pay <span id="payment-amount" class="font-bold text-indigo-700">₦0</span> for:</p>
+                <p class="font-medium" id="payment-course-name">Course Name</p>
+            </div>
+            <button id="proceed-payment-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg transition">
+                Proceed to Payment
+            </button>
+        </div>
     </div>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl p-6 max-w-md w-full mx-4 text-center">
+            <div class="mb-4">
+                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
+                    <i class="fas fa-check text-green-500 text-2xl"></i>
+                </div>
+            </div>
+            <h3 class="text-xl font-bold text-gray-800 mb-2">Payment Successful!</h3>
+            <p class="text-gray-600 mb-6">Thank you for enrolling in our course. Check your email for access details.</p>
+            <button id="success-modal-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg transition">
+                Continue to Dashboard
+            </button>
+        </div>
+    </div>
+
+    <!-- Failure Modal -->
+    <div id="failure-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl p-6 max-w-md w-full mx-4 text-center">
+            <div class="mb-4">
+                <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto">
+                    <i class="fas fa-times text-red-500 text-2xl"></i>
+                </div>
+            </div>
+            <h3 class="text-xl font-bold text-gray-800 mb-2">Payment Failed</h3>
+            <p class="text-gray-600 mb-6" id="failure-message">There was an issue processing your payment. Please try again or contact support.</p>
+            <button id="failure-modal-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg transition">
+                Try Again
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between">
+                <div class="mb-6 md:mb-0">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-code text-2xl"></i>
+                        <span class="code-font text-xl font-bold">CodeMaster</span>
+                    </div>
+                    <p class="text-gray-400">Empowering the next generation of developers.</p>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+                    <div>
+                        <h3 class="text-sm font-semibold uppercase tracking-wider mb-4">Courses</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">Python</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">Web Development</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">Data Science</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-semibold uppercase tracking-wider mb-4">Company</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">About</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">Careers</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-semibold uppercase tracking-wider mb-4">Legal</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">Privacy</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">Terms</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">Refunds</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400 text-sm">
+                <p>&copy; 2023 CodeMaster Academy. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Paystack Script -->
     <script src="https://js.paystack.co/v1/inline.js"></script>
-    <script src="script.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Course selection
+            const courseButtons = document.querySelectorAll('.select-course-btn');
+            const selectedCourseDisplay = document.getElementById('selected-course-display');
+            const selectedCourseName = document.getElementById('selected-course-name');
+            const selectedCoursePrice = document.getElementById('selected-course-price');
+            const changeCourseBtn = document.getElementById('change-course-btn');
+            const submitBtn = document.getElementById('submit-btn');
+            
+            let selectedCourse = null;
+            let selectedCourseTitle = '';
+
+            // Form fields
+            const form = document.getElementById('signup-form');
+            const fullname = document.getElementById('fullname');
+            const email = document.getElementById('email');
+            const phone = document.getElementById('phone');
+            const password = document.getElementById('password');
+            const confirmPassword = document.getElementById('confirm-password');
+
+            // Error messages
+            const fullnameError = document.getElementById('fullname-error');
+            const emailError = document.getElementById('email-error');
+            const phoneError = document.getElementById('phone-error');
+            const passwordError = document.getElementById('password-error');
+            const confirmPasswordError = document.getElementById('confirm-password-error');
+
+            // Password strength
+            const strengthBars = [
+                document.getElementById('strength-1'),
+                document.getElementById('strength-2'),
+                document.getElementById('strength-3'),
+                document.getElementById('strength-4')
+            ];
+            const strengthText = document.getElementById('password-strength-text');
+
+            // Modals
+            const paymentModal = document.getElementById('payment-modal');
+            const successModal = document.getElementById('success-modal');
+            const failureModal = document.getElementById('failure-modal');
+            const closeModalBtn = document.getElementById('close-modal');
+            const proceedPaymentBtn = document.getElementById('proceed-payment-btn');
+            const successModalBtn = document.getElementById('success-modal-btn');
+            const failureModalBtn = document.getElementById('failure-modal-btn');
+            const paymentAmount = document.getElementById('payment-amount');
+            const paymentCourseName = document.getElementById('payment-course-name');
+            const failureMessage = document.getElementById('failure-message');
+
+            // Password toggle
+            const togglePassword = document.getElementById('toggle-password');
+            const toggleConfirmPassword = document.getElementById('toggle-confirm-password');
+
+            // Select course
+            courseButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    selectedCourse = this.dataset.course;
+                    const courseTitle = this.parentElement.parentElement.querySelector('h3').textContent;
+                    const coursePrice = this.dataset.price;
+                    
+                    selectedCourseName.textContent = courseTitle;
+                    selectedCoursePrice.textContent = `₦${parseInt(coursePrice).toLocaleString()}`;
+                    selectedCourseTitle = courseTitle;
+                    
+                    // Show selected course display
+                    selectedCourseDisplay.classList.remove('hidden');
+                    
+                    // Update submit button
+                    updateSubmitButton();
+                    
+                    // Scroll to form
+                    document.querySelector('form').scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+
+            // Change course
+            changeCourseBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                selectedCourseDisplay.classList.add('hidden');
+                selectedCourse = null;
+                updateSubmitButton();
+            });
+
+            // Form validation
+            function validateForm() {
+                let isValid = true;
+                
+                // Full name validation
+                if (!fullname.value.trim()) {
+                    showError(fullname, fullnameError, 'Please enter your full name');
+                    isValid = false;
+                } else {
+                    hideError(fullname, fullnameError);
+                }
+                
+                // Email validation
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!email.value.trim()) {
+                    showError(email, emailError, 'Please enter your email address');
+                    isValid = false;
+                } else if (!emailRegex.test(email.value)) {
+                    showError(email, emailError, 'Please enter a valid email address');
+                    isValid = false;
+                } else {
+                    hideError(email, emailError);
+                }
+                
+                // Phone validation (Nigerian number)
+                const phoneRegex = /^(0|234)([7-9][01])\d{8}$/;
+                if (!phone.value.trim()) {
+                    showError(phone, phoneError, 'Please enter your phone number');
+                    isValid = false;
+                } else if (!phoneRegex.test(phone.value.replace(/\D/g, ''))) {
+                    showError(phone, phoneError, 'Please enter a valid Nigerian phone number');
+                    isValid = false;
+                } else {
+                    hideError(phone, phoneError);
+                }
+                
+                // Password validation
+                if (!password.value) {
+                    showError(password, passwordError, 'Please enter a password');
+                    isValid = false;
+                } else if (password.value.length < 8) {
+                    showError(password, passwordError, 'Password must be at least 8 characters');
+                    isValid = false;
+                } else {
+                    hideError(password, passwordError);
+                }
+                
+                // Confirm password validation
+                if (!confirmPassword.value) {
+                    showError(confirmPassword, confirmPasswordError, 'Please confirm your password');
+                    isValid = false;
+                } else if (confirmPassword.value !== password.value) {
+                    showError(confirmPassword, confirmPasswordError, 'Passwords do not match');
+                    isValid = false;
+                } else {
+                    hideError(confirmPassword, confirmPasswordError);
+                }
+                
+                return isValid;
+            }
+
+            function showError(input, errorElement, message) {
+                input.classList.add('input-error');
+                errorElement.textContent = message;
+                errorElement.classList.add('show');
+            }
+
+            function hideError(input, errorElement) {
+                input.classList.remove('input-error');
+                errorElement.classList.remove('show');
+            }
+
+            // Password strength indicator
+            password.addEventListener('input', function() {
+                const value = this.value;
+                let strength = 0;
+                
+                if (value.length >= 8) strength++;
+                if (value.match(/[A-Z]/)) strength++;
+                if (value.match(/[0-9]/)) strength++;
+                if (value.match(/[^A-Za-z0-9]/)) strength++;
+                
+                // Update strength bars
+                strengthBars.forEach((bar, index) => {
+                    bar.classList.remove('bg-red-500', 'bg-yellow-500', 'bg-green-500');
+                    
+                    if (index < strength) {
+                        if (strength <= 2) {
+                            bar.classList.add('bg-red-500');
+                        } else if (strength === 3) {
+                            bar.classList.add('bg-yellow-500');
+                        } else {
+                            bar.classList.add('bg-green-500');
+                        }
+                    } else {
+                        bar.classList.add('bg-gray-200');
+                    }
+                });
+                
+                // Update strength text
+                if (value.length === 0) {
+                    strengthText.textContent = 'Password strength';
+                } else if (strength <= 2) {
+                    strengthText.textContent = 'Weak password';
+                    strengthText.classList.remove('text-yellow-500', 'text-green-500');
+                    strengthText.classList.add('text-red-500');
+                } else if (strength === 3) {
+                    strengthText.textContent = 'Good password';
+                    strengthText.classList.remove('text-red-500', 'text-green-500');
+                    strengthText.classList.add('text-yellow-500');
+                } else {
+                    strengthText.textContent = 'Strong password';
+                    strengthText.classList.remove('text-red-500', 'text-yellow-500');
+                    strengthText.classList.add('text-green-500');
+                }
+            });
+
+            // Toggle password visibility
+            togglePassword.addEventListener('click', function() {
+                const icon = this.querySelector('i');
+                if (password.type === 'password') {
+                    password.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    password.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
+
+            toggleConfirmPassword.addEventListener('click', function() {
+                const icon = this.querySelector('i');
+                if (confirmPassword.type === 'password') {
+                    confirmPassword.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    confirmPassword.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
+
+            // Update submit button state
+            function updateSubmitButton() {
+                if (selectedCourse) {
+                    submitBtn.textContent = 'Sign Up & Pay';
+                    submitBtn.classList.remove('bg-gray-300', 'text-gray-500', 'cursor-not-allowed');
+                    submitBtn.classList.add('bg-indigo-600', 'hover:bg-indigo-700', 'text-white', 'cursor-pointer');
+                    submitBtn.disabled = false;
+                } else {
+                    submitBtn.textContent = 'Select a course to continue';
+                    submitBtn.classList.add('bg-gray-300', 'text-gray-500', 'cursor-not-allowed');
+                    submitBtn.classList.remove('bg-indigo-600', 'hover:bg-indigo-700', 'text-white', 'cursor-pointer');
+                    submitBtn.disabled = true;
+                }
+            }
+
+            // Form submission
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (validateForm() && selectedCourse) {
+                    // Show payment confirmation modal
+                    paymentAmount.textContent = selectedCoursePrice.textContent;
+                    paymentCourseName.textContent = selectedCourseTitle;
+                    paymentModal.classList.remove('hidden');
+                }
+            });
+
+            // Close modal
+            closeModalBtn.addEventListener('click', function() {
+                paymentModal.classList.add('hidden');
+            });
+
+            // Proceed to payment
+            proceedPaymentBtn.addEventListener('click', function() {
+                paymentModal.classList.add('hidden');
+                
+                // Initialize Paystack payment
+                const handler = PaystackPop.setup({
+                    key: 'pk_test_your_paystack_public_key_here', // Replace with your Paystack public key
+                    email: email.value,
+                    amount: parseInt(selectedCoursePrice.textContent.replace(/\D/g, '')) * 100, // Convert to kobo
+                    currency: 'NGN',
+                    ref: 'CM' + Math.floor(Math.random() * 1000000000 + 1),
+                    firstname: fullname.value.split(' ')[0],
+                    lastname: fullname.value.split(' ')[1] || '',
+                    metadata: {
+                        custom_fields: [
+                            {
+                                display_name: "Course",
+                                variable_name: "course",
+                                value: selectedCourseTitle
+                            },
+                            {
+                                display_name: "Phone",
+                                variable_name: "phone",
+                                value: phone.value
+                            }
+                        ]
+                    },
+                    callback: function(response) {
+                        // Payment successful
+                        successModal.classList.remove('hidden');
+                    },
+                    onClose: function() {
+                        // Payment window closed
+                        failureMessage.textContent = 'Payment was not completed. Please try again.';
+                        failureModal.classList.remove('hidden');
+                    }
+                });
+                
+                handler.openIframe();
+            });
+
+            // Close modals
+            successModalBtn.addEventListener('click', function() {
+                successModal.classList.add('hidden');
+                // Reset form
+                form.reset();
+                selectedCourseDisplay.classList.add('hidden');
+                selectedCourse = null;
+                updateSubmitButton();
+                // Reset password strength
+                strengthBars.forEach(bar => {
+                    bar.classList.remove('bg-red-500', 'bg-yellow-500', 'bg-green-500');
+                    bar.classList.add('bg-gray-200');
+                });
+                strengthText.textContent = 'Password strength';
+                strengthText.classList.remove('text-red-500', 'text-yellow-500', 'text-green-500');
+            });
+
+            failureModalBtn.addEventListener('click', function() {
+                failureModal.classList.add('hidden');
+            });
+
+            // Real-time validation as user types
+            fullname.addEventListener('input', function() {
+                if (!this.value.trim()) {
+                    showError(this, fullnameError, 'Please enter your full name');
+                } else {
+                    hideError(this, fullnameError);
+                }
+            });
+
+            email.addEventListener('input', function() {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!this.value.trim()) {
+                    showError(this, emailError, 'Please enter your email address');
+                } else if (!emailRegex.test(this.value)) {
+                    showError(this, emailError, 'Please enter a valid email address');
+                } else {
+                    hideError(this, emailError);
+                }
+            });
+
+            phone.addEventListener('input', function() {
+                const phoneRegex = /^(0|234)([7-9][01])\d{8}$/;
+                if (!this.value.trim()) {
+                    showError(this, phoneError, 'Please enter your phone number');
+                } else if (!phoneRegex.test(this.value.replace(/\D/g, ''))) {
+                    showError(this, phoneError, 'Please enter a valid Nigerian phone number');
+                } else {
+                    hideError(this, phoneError);
+                }
+            });
+
+            confirmPassword.addEventListener('input', function() {
+                if (!this.value) {
+                    showError(this, confirmPasswordError, 'Please confirm your password');
+                } else if (this.value !== password.value) {
+                    showError(this, confirmPasswordError, 'Passwords do not match');
+                } else {
+                    hideError(this, confirmPasswordError);
+                }
+            });
+        });
+    </script>
 </body>
 </html>
