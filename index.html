@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Class Signup</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="hero">
+            <h1>Join Our Next Coding Cohort</h1>
+            <p>Unlock your potential. Start your journey in tech today.</p>
+        </header>
+
+        <main>
+            <section id="courses" class="courses-section">
+                <h2>Select Your Course</h2>
+                <div class="course-cards">
+                    <div class="course-card" data-course-id="1" data-course-name="Introduction to Python" data-price="50000">
+                        <h3>Introduction to Python</h3>
+                        <p class="course-description">Master the fundamentals of Python programming, from basic syntax to object-oriented programming.</p>
+                        <p class="course-price">NGN 50,000</p>
+                        <button class="select-course-btn">Select Course</button>
+                    </div>
+                    <div class="course-card" data-course-id="2" data-course-name="Full-Stack Web Development" data-price="75000">
+                        <h3>Full-Stack Web Development</h3>
+                        <p class="course-description">Learn to build dynamic web applications from front to back with HTML, CSS, JavaScript, and Node.js.</p>
+                        <p class="course-price">NGN 75,000</p>
+                        <button class="select-course-btn">Select Course</button>
+                    </div>
+                    <div class="course-card" data-course-id="3" data-course-name="Data Science with R" data-price="65000">
+                        <h3>Data Science with R</h3>
+                        <p class="course-description">Dive into data analysis, visualization, and machine learning using the R programming language.</p>
+                        <p class="course-price">NGN 65,000</p>
+                        <button class="select-course-btn">Select Course</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="signup-form-section" class="signup-form-section">
+                <h2>Create Your Account</h2>
+                <form id="signup-form">
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" name="fullName" required>
+                        <div class="error-message"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                        <div class="error-message"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" required>
+                        <div class="error-message"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="password" name="password" required>
+                            <span class="toggle-password">Show</span>
+                        </div>
+                        <div id="password-strength" class="password-strength"></div>
+                        <div class="error-message"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" required>
+                        <div class="error-message"></div>
+                    </div>
+                    <button type="submit" id="submit-btn" class="submit-btn" disabled>Sign Up & Pay</button>
+                </form>
+            </section>
+        </main>
+
+        <footer>
+            <p>© 2025 Coding Academy. All rights reserved.</p>
+        </footer>
+    </div>
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
