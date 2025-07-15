@@ -56,6 +56,27 @@
         button:focus, input:focus {
             @apply outline-none ring-2 ring-indigo-500;
         }
+        /* WhatsApp Button Animation */
+#whatsapp-btn:active {
+    transform: scale(0.95);
+}
+
+/* Ensure existing animations are applied */
+[data-animate="fade-in"] {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+[data-animate="fade-in"].is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+button:hover, .course-card:hover, a[href="#courses"]:hover {
+    transform: translateY(-2px);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
@@ -75,7 +96,7 @@
                 <span class="code-font text-lg sm:text-xl font-bold">S.M.A.R.T</span>
             </div>
             <div class="hidden md:flex space-x-4">
-                <a href="#" class="text-sm hover:text-indigo-200 transition">Courses</a>
+                <a href="#courses" class="text-sm hover:text-indigo-200 transition">Courses</a>
                 <a href="#" class="text-sm hover:text-indigo-200 transition">About</a>
                 <a href="#" class="text-sm hover:text-indigo-200 transition">Contact</a>
             </div>
@@ -123,7 +144,7 @@
                             <span class="text-xl sm:text-2xl font-bold text-gray-800">₦3,000</span>
                             <button class="select-course-btn bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-medium py-2 px-4 sm:px-6 rounded-lg transition" 
                                     data-course="frontend" 
-                                    data-price="50000">
+                                    data-price="3000">
                                 Select Course
                             </button>
                         </div>
@@ -142,7 +163,7 @@
                             <span class="text-xl sm:text-2xl font-bold text-gray-800">₦3,000</span>
                             <button class="select-course-btn bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-medium py-2 px-4 sm:px-6 rounded-lg transition" 
                                     data-course="fullstack" 
-                                    data-price="75000">
+                                    data-price="3000">
                                 Select Course
                             </button>
                         </div>
@@ -289,7 +310,32 @@
             <button id="failure-modal-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-bold py-3 px-4 rounded-lg transition">Try Again</button>
         </div>
     </div>
+ <!-- About Section -->
+<section id="about" class="container mx-auto px-4 sm:px-6 py-12 sm:py-16">
+    <div class="max-w-4xl mx-auto text-center" data-animate="fade-in">
+        <h2 class="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-gray-800">About S.M.A.R.T</h2>
+        <p class="text-gray-700 text-sm sm:text-base mb-6">
+            S.M.A.R.T (Student Mentoring and Academic Resource Tutorship) was born from Queen Bliss's passion to transform tech education. Recognizing the challenges students face in accessing quality learning and effective tutoring, Queen Bliss envisioned a platform where aspiring developers could receive hands-on, expert-led guidance to master in-demand skills.
+        </p>
+        <p class="text-gray-700 text-sm sm:text-base mb-6">
+            Through S.M.A.R.T, Queen Bliss ensures every student gets personalized mentorship and practical training, empowering them to excel in the tech industry with confidence and competence.
+        </p>
+        <a href="#courses" class="inline-block bg-indigo-600 text-white font-bold py-2 sm:py-3 px-6 sm:px-8 rounded-full hover:bg-indigo-700 transition duration-300 transform hover:scale-105">Join Our Community</a>
+    </div>
+</section>
 
+<!-- Contact Section -->
+<section id="contact" class="container mx-auto px-4 sm:px-6 py-12 sm:py-16 bg-gray-100">
+    <div class="max-w-2xl mx-auto text-center" data-animate="fade-in">
+        <h2 class="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-gray-800">Get in Touch</h2>
+        <p class="text-gray-700 text-sm sm:text-base mb-6 sm:mb-8">
+            Have questions or need support? Connect with us directly on WhatsApp for quick and personalized assistance.
+        </p>
+        <a href="https://wa.me/2348012345678" id="whatsapp-btn" target="_blank" class="inline-block bg-green-500 text-white font-bold py-3 px-8 rounded-full hover:bg-green-600 transition duration-300 transform hover:scale-105 focus:ring-2 focus:ring-green-400">
+            <i class="fab fa-whatsapp mr-2"></i> Chat with Us on WhatsApp
+        </a>
+    </div>
+</section>
     <!-- Footer -->
     <footer class="bg-gray-800 text-white py-6 sm:py-8">
         <div class="container mx-auto px-4 sm:px-6">
@@ -330,415 +376,455 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Elements
-            const courseButtons = document.querySelectorAll('.select-course-btn');
-            const selectedCourseDisplay = document.getElementById('selected-course-display');
-            const selectedCourseName = document.getElementById('selected-course-name');
-            const selectedCoursePrice = document.getElementById('selected-course-price');
-            const changeCourseBtn = document.getElementById('change-course-btn');
-            const submitBtn = document.getElementById('submit-btn');
-            const submitText = document.getElementById('submit-text');
-            const submitSpinner = document.getElementById('submit-spinner');
-            const form = document.getElementById('signup-form');
-            const fullname = document.getElementById('fullname');
-            const email = document.getElementById('email');
-            const phone = document.getElementById('phone');
-            const password = document.getElementById('password');
-            const confirmPassword = document.getElementById('confirm-password');
-            const fullnameError = document.getElementById('fullname-error');
-            const emailError = document.getElementById('email-error');
-            const phoneError = document.getElementById('phone-error');
-            const passwordError = document.getElementById('password-error');
-            const confirmPasswordError = document.getElementById('confirm-password-error');
-            const fullnameValid = document.getElementById('fullname-valid');
-            const emailValid = document.getElementById('email-valid');
-            const phoneValid = document.getElementById('phone-valid');
-            const strengthBars = [
-                document.getElementById('strength-1'),
-                document.getElementById('strength-2'),
-                document.getElementById('strength-3'),
-                document.getElementById('strength-4')
-            ];
-            const strengthText = document.getElementById('password-strength-text');
-            const paymentModal = document.getElementById('payment-modal');
-            const successModal = document.getElementById('success-modal');
-            const failureModal = document.getElementById('failure-modal');
-            const closeModalBtn = document.getElementById('close-modal');
-            const proceedPaymentBtn = document.getElementById('proceed-payment-btn');
-            const paymentSpinner = document.getElementById('payment-spinner');
-            const successModalBtn = document.getElementById('success-modal-btn');
-            const failureModalBtn = document.getElementById('failure-modal-btn');
-            const paymentAmount = document.getElementById('payment-amount');
-            const paymentCourseName = document.getElementById('payment-course-name');
-            const failureMessage = document.getElementById('failure-message');
-            const togglePassword = document.getElementById('toggle-password');
-            const toggleConfirmPassword = document.getElementById('toggle-confirm-password');
-            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const loadingSpinner = document.getElementById('loading-spinner');
+    // Existing Elements
+    const courseButtons = document.querySelectorAll('.select-course-btn');
+    const selectedCourseDisplay = document.getElementById('selected-course-display');
+    const selectedCourseName = document.getElementById('selected-course-name');
+    const selectedCoursePrice = document.getElementById('selected-course-price');
+    const changeCourseBtn = document.getElementById('change-course-btn');
+    const submitBtn = document.getElementById('submit-btn');
+    const submitText = document.getElementById('submit-text');
+    const submitSpinner = document.getElementById('submit-spinner');
+    const form = document.getElementById('signup-form');
+    const fullname = document.getElementById('fullname');
+    const email = document.getElementById('email');
+    const phone = document.getElementById('phone');
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirm-password');
+    const fullnameError = document.getElementById('fullname-error');
+    const emailError = document.getElementById('email-error');
+    const phoneError = document.getElementById('phone-error');
+    const passwordError = document.getElementById('password-error');
+    const confirmPasswordError = document.getElementById('confirm-password-error');
+    const fullnameValid = document.getElementById('fullname-valid');
+    const emailValid = document.getElementById('email-valid');
+    const phoneValid = document.getElementById('phone-valid');
+    const strengthBars = [
+        document.getElementById('strength-1'),
+        document.getElementById('strength-2'),
+        document.getElementById('strength-3'),
+        document.getElementById('strength-4')
+    ];
+    const strengthText = document.getElementById('password-strength-text');
+    const paymentModal = document.getElementById('payment-modal');
+    const successModal = document.getElementById('success-modal');
+    const failureModal = document.getElementById('failure-modal');
+    const closeModalBtn = document.getElementById('close-modal');
+    const proceedPaymentBtn = document.getElementById('proceed-payment-btn');
+    const paymentSpinner = document.getElementById('payment-spinner');
+    const successModalBtn = document.getElementById('success-modal-btn');
+    const failureModalBtn = document.getElementById('failure-modal-btn');
+    const paymentAmount = document.getElementById('payment-amount');
+    const paymentCourseName = document.getElementById('payment-course-name');
+    const failureMessage = document.getElementById('failure-message');
+    const togglePassword = document.getElementById('toggle-password');
+    const toggleConfirmPassword = document.getElementById('toggle-confirm-password');
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const loadingSpinner = document.getElementById('loading-spinner');
+    const whatsappBtn = document.getElementById('whatsapp-btn');
 
-            let selectedCourse = null;
-            let selectedCourseTitle = '';
+    let selectedCourse = null;
+    let selectedCourseTitle = '';
 
-            // Debounce utility
-            const debounce = (func, wait) => {
-                let timeout;
-                return (...args) => {
-                    clearTimeout(timeout);
-                    timeout = setTimeout(() => func.apply(this, args), wait);
-                };
-            };
+    // Debounce utility
+    const debounce = (func, wait) => {
+        let timeout;
+        return (...args) => {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(this, args), wait);
+        };
+    };
 
-            // Show/Hide Error
-            const showError = (input, errorElement, message) => {
-                input.classList.add('input-error');
-                input.classList.remove('input-valid');
-                errorElement.textContent = message;
-                errorElement.classList.add('show');
-                input.nextElementSibling.classList.remove('opacity-100', 'max-h-20');
-            };
+    // Show/Hide Error
+    const showError = (input, errorElement, message) => {
+        input.classList.add('input-error', 'shake');
+        input.classList.remove('input-valid');
+        errorElement.textContent = message;
+        errorElement.classList.add('show');
+        setTimeout(() => input.classList.remove('shake'), 500);
+    };
 
-            const hideError = (input, errorElement) => {
-                input.classList.remove('input-error');
-                errorElement.classList.remove('show');
-            };
+    const hideError = (input, errorElement) => {
+        input.classList.remove('input-error', 'shake');
+        errorElement.classList.remove('show');
+    };
 
-            const showValid = (input, validElement) => {
-                input.classList.add('input-valid');
-                input.classList.remove('input-error');
-                validElement.classList.add('opacity-100', 'max-h-20');
-                input.nextElementSibling.classList.remove('show');
-            };
+    const showValid = (input, validElement) => {
+        input.classList.add('input-valid');
+        input.classList.remove('input-error', 'shake');
+        validElement.classList.add('opacity-100', 'max-h-20');
+        input.nextElementSibling.classList.remove('show');
+    };
 
-            // Course selection
-            document.querySelector('#courses').addEventListener('click', (e) => {
-                if (e.target.classList.contains('select-course-btn')) {
-                    const button = e.target;
-                    selectedCourse = button.dataset.course;
-                    const courseTitle = button.closest('.course-card').querySelector('h3').textContent;
-                    const coursePrice = button.dataset.price;
-
-                    selectedCourseName.textContent = courseTitle;
-                    selectedCoursePrice.textContent = `₦${parseInt(coursePrice).toLocaleString()}`;
-                    selectedCourseTitle = courseTitle;
-
-                    document.querySelectorAll('.course-card').forEach(card => card.classList.remove('border-indigo-500', 'ring-2', 'ring-indigo-200'));
-                    button.closest('.course-card').classList.add('border-indigo-500', 'ring-2', 'ring-indigo-200');
-
-                    selectedCourseDisplay.classList.remove('hidden');
-                    updateSubmitButton();
-                    form.scrollIntoView({ behavior: 'smooth' });
+    // Intersection Observer for fade-in animations
+    const animateOnScroll = () => {
+        const elements = document.querySelectorAll('[data-animate="fade-in"]');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
                 }
             });
+        }, { threshold: 0.2 });
 
-            // Change course
-            changeCourseBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                selectedCourseDisplay.classList.add('hidden');
-                selectedCourse = null;
-                document.querySelectorAll('.course-card').forEach(card => card.classList.remove('border-indigo-500', 'ring-2', 'ring-indigo-200'));
-                updateSubmitButton();
-            });
+        elements.forEach(el => observer.observe(el));
+    };
 
-            // Mobile menu toggle
-            mobileMenuBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-                const isOpen = !mobileMenu.classList.contains('hidden');
-                mobileMenuBtn.querySelector('i').classList.toggle('fa-bars', !isOpen);
-                mobileMenuBtn.querySelector('i').classList.toggle('fa-times', isOpen);
-            });
-
-            // Form validation
-            const validateForm = () => {
-                let isValid = true;
-
-                if (!fullname.value.trim()) {
-                    showError(fullname, fullnameError, 'Please enter your full name');
-                    isValid = false;
-                } else {
-                    hideError(fullname, fullnameError);
-                    showValid(fullname, fullnameValid);
-                }
-
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!email.value.trim()) {
-                    showError(email, emailError, 'Please enter your email address');
-                    isValid = false;
-                } else if (!emailRegex.test(email.value)) {
-                    showError(email, emailError, 'Please enter a valid email address');
-                    isValid = false;
-                } else {
-                    hideError(email, emailError);
-                    showValid(email, emailValid);
-                }
-
-                const phoneRegex = /^(0|234)([7-9][01])\d{8}$/;
-                if (!phone.value.trim()) {
-                    showError(phone, phoneError, 'Please enter your phone number');
-                    isValid = false;
-                } else if (!phoneRegex.test(phone.value.replace(/\D/g, ''))) {
-                    showError(phone, phoneError, 'Please enter a valid Nigerian phone number');
-                    isValid = false;
-                } else {
-                    hideError(phone, phoneError);
-                    showValid(phone, phoneValid);
-                }
-
-                if (!password.value) {
-                    showError(password, passwordError, 'Please enter a password');
-                    isValid = false;
-                } else if (password.value.length < 8) {
-                    showError(password, passwordError, 'Password must be at least 8 characters');
-                    isValid = false;
-                } else {
-                    hideError(password, passwordError);
-                }
-
-                if (!confirmPassword.value) {
-                    showError(confirmPassword, confirmPasswordError, 'Please confirm your password');
-                    isValid = false;
-                } else if (confirmPassword.value !== password.value) {
-                    showError(confirmPassword, confirmPasswordError, 'Passwords do not match');
-                    isValid = false;
-                } else {
-                    hideError(confirmPassword, confirmPasswordError);
-                }
-
-                return isValid;
-            };
-
-            // Password strength
-            password.addEventListener('input', () => {
-                const value = password.value;
-                let strength = 0;
-
-                if (value.length >= 8) strength++;
-                if (value.match(/[A-Z]/)) strength++;
-                if (value.match(/[0-9]/)) strength++;
-                if (value.match(/[^A-Za-z0-9]/)) strength++;
-
-                strengthBars.forEach((bar, index) => {
-                    bar.classList.remove('bg-red-500', 'bg-yellow-500', 'bg-green-500');
-                    if (index < strength) {
-                        bar.classList.add(strength <= 2 ? 'bg-red-500' : strength === 3 ? 'bg-yellow-500' : 'bg-green-500');
-                    } else {
-                        bar.classList.add('bg-gray-200');
-                    }
-                });
-
-                strengthText.textContent = value.length === 0 ? 'Password strength' :
-                    strength <= 2 ? 'Weak password' :
-                    strength === 3 ? 'Good password' : 'Strong password';
-                strengthText.classList.remove('text-red-500', 'text-yellow-500', 'text-green-500');
-                strengthText.classList.add(
-                    value.length === 0 ? 'text-gray-500' :
-                    strength <= 2 ? 'text-red-500' :
-                    strength === 3 ? 'text-yellow-500' : 'text-green-500'
-                );
-            });
-
-            // Toggle password visibility
-            togglePassword.addEventListener('click', () => {
-                const icon = togglePassword.querySelector('i');
-                password.type = password.type === 'password' ? 'text' : 'password';
-                icon.classList.toggle('fa-eye', password.type === 'password');
-                icon.classList.toggle('fa-eye-slash', password.type === 'text');
-            });
-
-            toggleConfirmPassword.addEventListener('click', () => {
-                const icon = toggleConfirmPassword.querySelector('i');
-                confirmPassword.type = confirmPassword.type === 'password' ? 'text' : 'password';
-                icon.classList.toggle('fa-eye', confirmPassword.type === 'password');
-                icon.classList.toggle('fa-eye-slash', confirmPassword.type === 'text');
-            });
-
-            // Update submit button
-            const updateSubmitButton = () => {
-                if (selectedCourse) {
-                    submitText.textContent = 'Sign Up & Pay';
-                    submitBtn.classList.remove('bg-gray-300', 'text-gray-500', 'cursor-not-allowed');
-                    submitBtn.classList.add('bg-indigo-600', 'hover:bg-indigo-700', 'text-white', 'cursor-pointer');
-                    submitBtn.disabled = false;
-                } else {
-                    submitText.textContent = 'Select a course to continue';
-                    submitBtn.classList.add('bg-gray-300', 'text-gray-500', 'cursor-not-allowed');
-                    submitBtn.classList.remove('bg-indigo-600', 'hover:bg-indigo-700', 'text-white', 'cursor-pointer');
-                    submitBtn.disabled = true;
-                }
-            };
-
-            // Form submission
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                if (validateForm() && selectedCourse) {
-                    submitBtn.disabled = true;
-                    submitText.classList.add('hidden');
-                    submitSpinner.classList.remove('hidden');
-                    setTimeout(() => {
-                        submitText.classList.remove('hidden');
-                        submitSpinner.classList.add('hidden');
-                        paymentAmount.textContent = selectedCoursePrice.textContent;
-                        paymentCourseName.textContent = selectedCourseTitle;
-                        paymentModal.classList.remove('hidden');
-                        trapFocus(paymentModal);
-                        submitBtn.disabled = false;
-                    }, 1000); // Simulate async operation
-                }
-            });
-
-            // Trap focus in modals
-            const trapFocus = (modal) => {
-                const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea');
-                const firstElement = focusableElements[0];
-                const lastElement = focusableElements[focusableElements.length - 1];
-
-                modal.addEventListener('keydown', (e) => {
-                    if (e.key === 'Tab') {
-                        if (e.shiftKey && document.activeElement === firstElement) {
-                            e.preventDefault();
-                            lastElement.focus();
-                        } else if (!e.shiftKey && document.activeElement === lastElement) {
-                            e.preventDefault();
-                            firstElement.focus();
-                        }
-                    }
-                });
-                firstElement.focus();
-            };
-
-            // Close modals
-            closeModalBtn.addEventListener('click', () => paymentModal.classList.add('hidden'));
-            successModalBtn.addEventListener('click', () => {
-                successModal.classList.add('hidden');
-                form.reset();
-                selectedCourseDisplay.classList.add('hidden');
-                selectedCourse = null;
-                updateSubmitButton();
-                strengthBars.forEach(bar => bar.classList.add('bg-gray-200'));
-                strengthText.textContent = 'Password strength';
-                strengthText.classList.remove('text-red-500', 'text-yellow-500', 'text-green-500');
-            });
-            failureModalBtn.addEventListener('click', () => failureModal.classList.add('hidden'));
-
-            // Close modals with ESC
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    paymentModal.classList.add('hidden');
-                    successModal.classList.add('hidden');
-                    failureModal.classList.add('hidden');
-                    mobileMenu.classList.add('hidden');
-                    mobileMenuBtn.querySelector('i').classList.add('fa-bars');
-                    mobileMenuBtn.querySelector('i').classList.remove('fa-times');
-                }
-            });
-
-            // Proceed to payment
-            proceedPaymentBtn.addEventListener('click', () => {
-                if (confirm(`Confirm payment of ${selectedCoursePrice.textContent} for ${selectedCourseTitle}?`)) {
-                    proceedPaymentBtn.disabled = true;
-                    paymentSpinner.classList.remove('hidden');
-                    proceedPaymentBtn.querySelector('span').classList.add('hidden');
-                    loadingSpinner.classList.remove('hidden');
-
-                    setTimeout(() => {
-                        paymentModal.classList.add('hidden');
-                        proceedPaymentBtn.disabled = false;
-                        paymentSpinner.classList.add('hidden');
-                        proceedPaymentBtn.querySelector('span').classList.remove('hidden');
-
-                        FlutterwaveCheckout({
-                            public_key: 'FLWPUBK-565a5c36236a1461145e4c3eefd84b6f-X',
-                            tx_ref: 'SMART' + Math.floor(Math.random() * 1000000000 + 1),
-                            amount: parseInt(selectedCoursePrice.textContent.replace(/\D/g, '')),
-                            currency: 'NGN',
-                            payment_options: 'card, mobilemoney, ussd, banktransfer',
-                            customer: {
-                                email: email.value,
-                                phone_number: phone.value,
-                                name: fullname.value,
-                            },
-                            customizations: {
-                                title: 'S.M.A.R.T by Queen Bliss',
-                                description: `Payment for ${selectedCourseTitle}`,
-                                logo: 'https://your-logo-url.com/logo.png',
-                            },
-                            meta: { course: selectedCourseTitle },
-                            callback: (response) => {
-                                loadingSpinner.classList.add('hidden');
-                                if (response.status === 'successful') {
-                                    successModal.classList.remove('hidden');
-                                    trapFocus(successModal);
-                                } else {
-                                    failureMessage.textContent = response.message || 'Payment failed. Please try again.';
-                                    failureModal.classList.remove('hidden');
-                                    trapFocus(failureModal);
-                                }
-                            },
-                            onclose: () => {
-                                loadingSpinner.classList.add('hidden');
-                                failureMessage.textContent = 'Payment was not completed. Please try again.';
-                                failureModal.classList.remove('hidden');
-                                trapFocus(failureModal);
-                            }
-                        });
-                    }, 1000); // Simulate async operation
-                }
-            });
-
-            // Real-time validation
-            fullname.addEventListener('input', debounce(() => {
-                if (!fullname.value.trim()) {
-                    showError(fullname, fullnameError, 'Please enter your full name');
-                } else {
-                    hideError(fullname, fullnameError);
-                    showValid(fullname, fullnameValid);
-                }
-            }, 300));
-
-            email.addEventListener('input', debounce(() => {
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!email.value.trim()) {
-                    showError(email, emailError, 'Please enter your email address');
-                } else if (!emailRegex.test(email.value)) {
-                    showError(email, emailError, 'Please enter a valid email address');
-                } else {
-                    hideError(email, emailError);
-                    showValid(email, emailValid);
-                }
-            }, 300));
-
-            phone.addEventListener('input', debounce(() => {
-                const phoneRegex = /^(0|234)([7-9][01])\d{8}$/;
-                if (!phone.value.trim()) {
-                    showError(phone, phoneError, 'Please enter your phone number');
-                } else if (!phoneRegex.test(phone.value.replace(/\D/g, ''))) {
-                    showError(phone, phoneError, 'Please enter a valid Nigerian phone number');
-                } else {
-                    hideError(phone, phoneError);
-                    showValid(phone, phoneValid);
-                }
-            }, 300));
-
-            confirmPassword.addEventListener('input', debounce(() => {
-                if (!confirmPassword.value) {
-                    showError(confirmPassword, confirmPasswordError, 'Please confirm your password');
-                } else if (confirmPassword.value !== password.value) {
-                    showError(confirmPassword, confirmPasswordError, 'Passwords do not match');
-                } else {
-                    hideError(confirmPassword, confirmPasswordError);
-                }
-            }, 300));
-
-            // Clear errors on focus
-            [fullname, email, phone, password, confirmPassword].forEach(input => {
-                input.addEventListener('focus', () => {
-                    hideError(input, input.nextElementSibling);
-                    if (input.nextElementSibling.nextElementSibling) {
-                        input.nextElementSibling.nextElementSibling.classList.remove('opacity-100', 'max-h-20');
-                    }
-                });
-            });
+    // Smooth scroll for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', (e) => {
+            e.preventDefault();
+            const target = document.querySelector(anchor.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+                // Close mobile menu if open
+                mobileMenu.classList.add('hidden');
+                mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+                mobileMenuBtn.querySelector('i').classList.remove('fa-times');
+            }
         });
+    });
+
+    // WhatsApp button click animation
+    whatsappBtn.addEventListener('click', () => {
+        whatsappBtn.classList.add('scale-95');
+        setTimeout(() => whatsappBtn.classList.remove('scale-95'), 200);
+    });
+
+    // Course selection
+    document.querySelector('#courses').addEventListener('click', (e) => {
+        if (e.target.classList.contains('select-course-btn')) {
+            const button = e.target;
+            selectedCourse = button.dataset.course;
+            const courseTitle = button.closest('.course-card').querySelector('h3').textContent;
+            const coursePrice = button.dataset.price;
+
+            selectedCourseName.textContent = courseTitle;
+            selectedCoursePrice.textContent = `₦${parseInt(coursePrice).toLocaleString()}`;
+            selectedCourseTitle = courseTitle;
+
+            document.querySelectorAll('.course-card').forEach(card => card.classList.remove('border-indigo-500', 'ring-2', 'ring-indigo-200'));
+            button.closest('.course-card').classList.add('border-indigo-500', 'ring-2', 'ring-indigo-200');
+
+            selectedCourseDisplay.classList.remove('hidden');
+            updateSubmitButton();
+            form.scrollIntoView({ behavior: 'smooth' });
+        }
+    });
+
+    // Change course
+    changeCourseBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        selectedCourseDisplay.classList.add('hidden');
+        selectedCourse = null;
+        document.querySelectorAll('.course-card').forEach(card => card.classList.remove('border-indigo-500', 'ring-2', 'ring-indigo-200'));
+        updateSubmitButton();
+    });
+
+    // Mobile menu toggle
+    mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        const isOpen = !mobileMenu.classList.contains('hidden');
+        mobileMenuBtn.querySelector('i').classList.toggle('fa-bars', !isOpen);
+        mobileMenuBtn.querySelector('i').classList.toggle('fa-times', isOpen);
+    });
+
+    // Signup Form Validation
+    const validateForm = () => {
+        let isValid = true;
+
+        if (!fullname.value.trim()) {
+            showError(fullname, fullnameError, 'Please enter your full name');
+            isValid = false;
+        } else {
+            hideError(fullname, fullnameError);
+            showValid(fullname, fullnameValid);
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email.value.trim()) {
+            showError(email, emailError, 'Please enter your email address');
+            isValid = false;
+        } else if (!emailRegex.test(email.value)) {
+            showError(email, emailError, 'Please enter a valid email address');
+            isValid = false;
+        } else {
+            hideError(email, emailError);
+            showValid(email, emailValid);
+        }
+
+        const phoneRegex = /^(0|234)([7-9][01])\d{8}$/;
+        if (!phone.value.trim()) {
+            showError(phone, phoneError, 'Please enter your phone number');
+            isValid = false;
+        } else if (!phoneRegex.test(phone.value.replace(/\D/g, ''))) {
+            showError(phone, phoneError, 'Please enter a valid Nigerian phone number');
+            isValid = false;
+        } else {
+            hideError(phone, phoneError);
+            showValid(phone, phoneValid);
+        }
+
+        if (!password.value) {
+            showError(password, passwordError, 'Please enter a password');
+            isValid = false;
+        } else if (password.value.length < 8) {
+            showError(password, passwordError, 'Password must be at least 8 characters');
+            isValid = false;
+        } else {
+            hideError(password, passwordError);
+        }
+
+        if (!confirmPassword.value) {
+            showError(confirmPassword, confirmPasswordError, 'Please confirm your password');
+            isValid = false;
+        } else if (confirmPassword.value !== password.value) {
+            showError(confirmPassword, confirmPasswordError, 'Passwords do not match');
+            isValid = false;
+        } else {
+            hideError(confirmPassword, confirmPasswordError);
+        }
+
+        return isValid;
+    };
+
+    // Password strength
+    password.addEventListener('input', () => {
+        const value = password.value;
+        let strength = 0;
+
+        if (value.length >= 8) strength++;
+        if (value.match(/[A-Z]/)) strength++;
+        if (value.match(/[0-9]/)) strength++;
+        if (value.match(/[^A-Za-z0-9]/)) strength++;
+
+        strengthBars.forEach((bar, index) => {
+            bar.classList.remove('bg-red-500', 'bg-yellow-500', 'bg-green-500');
+            if (index < strength) {
+                bar.classList.add(strength <= 2 ? 'bg-red-500' : strength === 3 ? 'bg-yellow-500' : 'bg-green-500');
+            } else {
+                bar.classList.add('bg-gray-200');
+            }
+        });
+
+        strengthText.textContent = value.length === 0 ? 'Password strength' :
+            strength <= 2 ? 'Weak password' :
+            strength === 3 ? 'Good password' : 'Strong password';
+        strengthText.classList.remove('text-red-500', 'text-yellow-500', 'text-green-500');
+        strengthText.classList.add(
+            value.length === 0 ? 'text-gray-500' :
+            strength <= 2 ? 'text-red-500' :
+            strength === 3 ? 'text-yellow-500' : 'text-green-500'
+        );
+    });
+
+    // Toggle password visibility
+    togglePassword.addEventListener('click', () => {
+        const icon = togglePassword.querySelector('i');
+        password.type = password.type === 'password' ? 'text' : 'password';
+        icon.classList.toggle('fa-eye', password.type === 'password');
+        icon.classList.toggle('fa-eye-slash', password.type === 'text');
+    });
+
+    toggleConfirmPassword.addEventListener('click', () => {
+        const icon = toggleConfirmPassword.querySelector('i');
+        confirmPassword.type = confirmPassword.type === 'password' ? 'text' : 'password';
+        icon.classList.toggle('fa-eye', confirmPassword.type === 'password');
+        icon.classList.toggle('fa-eye-slash', confirmPassword.type === 'text');
+    });
+
+    // Update submit button
+    const updateSubmitButton = () => {
+        if (selectedCourse) {
+            submitText.textContent = 'Sign Up & Pay';
+            submitBtn.classList.remove('bg-gray-300', 'text-gray-500', 'cursor-not-allowed');
+            submitBtn.classList.add('bg-indigo-600', 'hover:bg-indigo-700', 'text-white', 'cursor-pointer');
+            submitBtn.disabled = false;
+        } else {
+            submitText.textContent = 'Select a course to continue';
+            submitBtn.classList.add('bg-gray-300', 'text-gray-500', 'cursor-not-allowed');
+            submitBtn.classList.remove('bg-indigo-600', 'hover:bg-indigo-700', 'text-white', 'cursor-pointer');
+            submitBtn.disabled = true;
+        }
+    };
+
+    // Form submission
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (validateForm() && selectedCourse) {
+            submitBtn.disabled = true;
+            submitText.classList.add('hidden');
+            submitSpinner.classList.remove('hidden');
+            setTimeout(() => {
+                submitText.classList.remove('hidden');
+                submitSpinner.classList.add('hidden');
+                paymentAmount.textContent = selectedCoursePrice.textContent;
+                paymentCourseName.textContent = selectedCourseTitle;
+                paymentModal.classList.remove('hidden');
+                trapFocus(paymentModal);
+                submitBtn.disabled = false;
+            }, 1000); // Simulate async operation
+        }
+    });
+
+    // Trap focus in modals
+    const trapFocus = (modal) => {
+        const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea');
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+
+        modal.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                if (e.shiftKey && document.activeElement === firstElement) {
+                    e.preventDefault();
+                    lastElement.focus();
+                } else if (!e.shiftKey && document.activeElement === lastElement) {
+                    e.preventDefault();
+                    firstElement.focus();
+                }
+            }
+        });
+        firstElement.focus();
+    };
+
+    // Close modals
+    closeModalBtn.addEventListener('click', () => paymentModal.classList.add('hidden'));
+    successModalBtn.addEventListener('click', () => {
+        successModal.classList.add('hidden');
+        form.reset();
+        selectedCourseDisplay.classList.add('hidden');
+        selectedCourse = null;
+        updateSubmitButton();
+        strengthBars.forEach(bar => bar.classList.add('bg-gray-200'));
+        strengthText.textContent = 'Password strength';
+        strengthText.classList.remove('text-red-500', 'text-yellow-500', 'text-green-500');
+    });
+    failureModalBtn.addEventListener('click', () => failureModal.classList.add('hidden'));
+
+    // Close modals with ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            paymentModal.classList.add('hidden');
+            successModal.classList.add('hidden');
+            failureModal.classList.add('hidden');
+            mobileMenu.classList.add('hidden');
+            mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+            mobileMenuBtn.querySelector('i').classList.remove('fa-times');
+        }
+    });
+
+    // Proceed to payment
+    proceedPaymentBtn.addEventListener('click', () => {
+        if (confirm(`Confirm payment of ${selectedCoursePrice.textContent} for ${selectedCourseTitle}?`)) {
+            proceedPaymentBtn.disabled = true;
+            paymentSpinner.classList.remove('hidden');
+            proceedPaymentBtn.querySelector('span').classList.add('hidden');
+            loadingSpinner.classList.remove('hidden');
+
+            setTimeout(() => {
+                paymentModal.classList.add('hidden');
+                proceedPaymentBtn.disabled = false;
+                paymentSpinner.classList.add('hidden');
+                proceedPaymentBtn.querySelector('span').classList.remove('hidden');
+
+                FlutterwaveCheckout({
+                    public_key: 'FLWPUBK-565a5c36236a1461145e4c3eefd84b6f-X',
+                    tx_ref: 'SMART' + Math.floor(Math.random() * 1000000000 + 1),
+                    amount: parseInt(selectedCoursePrice.textContent.replace(/\D/g, '')),
+                    currency: 'NGN',
+                    payment_options: 'card, mobilemoney, ussd, banktransfer',
+                    customer: {
+                        email: email.value,
+                        phone_number: phone.value,
+                        name: fullname.value,
+                    },
+                    customizations: {
+                        title: 'S.M.A.R.T by Queen Bliss',
+                        description: `Payment for ${selectedCourseTitle}`,
+                        logo: 'logo.png',
+                    },
+                    meta: { course: selectedCourseTitle },
+                    callback: (response) => {
+                        loadingSpinner.classList.add('hidden');
+                        if (response.status === 'successful') {
+                            successModal.classList.remove('hidden');
+                            trapFocus(successModal);
+                        } else {
+                            failureMessage.textContent = response.message || 'Payment failed. Please try again.';
+                            failureModal.classList.remove('hidden');
+                            trapFocus(failureModal);
+                        }
+                    },
+                    onclose: () => {
+                        loadingSpinner.classList.add('hidden');
+                        failureMessage.textContent = 'Payment was not completed. Please try again.';
+                        failureModal.classList.remove('hidden');
+                        trapFocus(failureModal);
+                    }
+                });
+            }, 1000); // Simulate async operation
+        }
+    });
+
+    // Real-time validation for signup form
+    fullname.addEventListener('input', debounce(() => {
+        if (!fullname.value.trim()) {
+            showError(fullname, fullnameError, 'Please enter your full name');
+        } else {
+            hideError(fullname, fullnameError);
+            showValid(fullname, fullnameValid);
+        }
+    }, 300));
+
+    email.addEventListener('input', debounce(() => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email.value.trim()) {
+            showError(email, emailError, 'Please enter your email address');
+        } else if (!emailRegex.test(email.value)) {
+            showError(email, emailError, 'Please enter a valid email address');
+        } else {
+            hideError(email, emailError);
+            showValid(email, emailValid);
+        }
+    }, 300));
+
+    phone.addEventListener('input', debounce(() => {
+        const phoneRegex = /^(0|234)([7-9][01])\d{8}$/;
+        if (!phone.value.trim()) {
+            showError(phone, phoneError, 'Please enter your phone number');
+        } else if (!phoneRegex.test(phone.value.replace(/\D/g, ''))) {
+            showError(phone, phoneError, 'Please enter a valid Nigerian phone number');
+        } else {
+            hideError(phone, phoneError);
+            showValid(phone, phoneValid);
+        }
+    }, 300));
+
+    confirmPassword.addEventListener('input', debounce(() => {
+        if (!confirmPassword.value) {
+            showError(confirmPassword, confirmPasswordError, 'Please confirm your password');
+        } else if (confirmPassword.value !== password.value) {
+            showError(confirmPassword, confirmPasswordError, 'Passwords do not match');
+        } else {
+            hideError(confirmPassword, confirmPasswordError);
+        }
+    }, 300));
+
+    // Clear errors on focus
+    [fullname, email, phone, password, confirmPassword].forEach(input => {
+        input.addEventListener('focus', () => {
+            hideError(input, input.nextElementSibling);
+            if (input.nextElementSibling.nextElementSibling) {
+                input.nextElementSibling.nextElementSibling.classList.remove('opacity-100', 'max-h-20');
+            }
+        });
+    });
+
+    // Initialize animations
+    animateOnScroll();
+});
     </script>
 </body>
 </html>
